@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Param, Delete, Patch, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Patch, Query, Put, UsePipes, ValidationPipe } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskRequest } from './dto/create-task.dto';
 import { ChangeTaskStatusRequest } from './dto/change-task-status.dto';
 import { FilterTasksRequest } from './dto/filter-tasks.dto';
+import { UpdateTaskRequest } from './dto/update-task.dto';
+import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe';
 import { ITask } from './task.model';
 
 @Controller('tasks')
@@ -21,19 +23,28 @@ export class TaskController {
   }
 
   @Post()
+  @UsePipes(ValidationPipe)
   public create(@Body() request: CreateTaskRequest): ITask { 
     return this.service.create(request);
   }
 
-  @Patch('/:id')
+  @Put('/:id')
+  public update(
+    @Param('id') id: string, 
+    @Body() request: UpdateTaskRequest
+  ): ITask {
+    return this.service.update(id, request);
+  }
+
+  @Patch('/:id/status')
   public changeStatus(
     @Param('id') id: string, 
-    @Body() request: ChangeTaskStatusRequest
+    @Body(TaskStatusValidationPipe) request: ChangeTaskStatusRequest,
   ): ITask {
     return this.service.changeStatus(id, request);
   }
 
-  @Delete('/:id/status')
+  @Delete('/:id')
   public delete(@Param('id') id: string): void {
     this.service.delete(id);
   }
