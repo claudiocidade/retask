@@ -1,14 +1,14 @@
 version: '3.3'
 services:
-  api:
-    build:
-      dockerfile: Dockerfile
-      context: .
-    ports: 
-      - "3000:3000"
-    volumes: 
-      - /app/node_modules
-      - ./:/app
+  # api:
+  #   build:
+  #     dockerfile: Dockerfile
+  #     context: .
+  #   ports: 
+  #     - "3000:3000"
+  #   volumes: 
+  #     - /app/node_modules
+  #     - ./:/app
   pg:
     image: postgres:10-alpine
     environment: 
