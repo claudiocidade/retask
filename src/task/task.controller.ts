@@ -12,7 +12,7 @@ export class TaskController {
   constructor(private readonly service: TaskService) {}
 
   @Get()
-  public list(@Query() request: FilterTasksRequest):ITask[] { 
+  public list(@Query(ValidationPipe) request: FilterTasksRequest):ITask[] { 
     if (Object.keys(request))
     return this.service.list(request); 
   };

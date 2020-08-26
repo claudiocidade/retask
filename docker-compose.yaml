@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports: 
+      - "3000:3000"
+    volumes: 
+      - /app/node_modules
+      - ./:/app
+  pg:
+    image: postgres:10-alpine
+    environment: 
+      - POSTGRES_USER=retask
+      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_DB=retask
+    ports:
+      - 5432:5432
+    

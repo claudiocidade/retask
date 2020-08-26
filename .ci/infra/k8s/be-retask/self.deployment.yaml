@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: be-retask-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: be-retask
+  template:
+    metadata:
+      labels:
+        app: be-retask
+    spec:
+      containers:
+        - name: be-retask
+          image: claudiocidade/be-retask
